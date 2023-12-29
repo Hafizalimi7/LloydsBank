@@ -1,4 +1,6 @@
 class LloydsBank:
+  balance = 1000
+
   def __init__(self, f_name, l_name, age):
     self.f_name = f_name
     self.l_name = l_name
@@ -18,7 +20,6 @@ class BankAcc(LloydsBank):
   def __init__(self, f_name, l_name, age, func, wage):
     super().__init__(f_name, l_name, age)
     self.func = func
-    self.balance = 1000
     self.wage = wage
     self.monthly_wage = 0
     self.year_wage = 0
@@ -31,15 +32,15 @@ class BankAcc(LloydsBank):
     self.year_wage = int(self.monthly_wage * 12)
     return self.year_wage
 
-class SecureUnit(BankAcc, LloydsBank):
-  def __init__(self, f_name, l_name, age, func, wage, password, secrurity_keyword):
-    super().__init__(f_name, l_name, age, func, wage)
+class PasswordCheck(BankAcc, LloydsBank):
+  def __init__(self, f_name, l_name, func,  password, secrurity_keyword):
+    super().__init__(f_name, l_name, func)
     self.password = password
     self.security_keyword = secrurity_keyword
   
   def __call__(self, *args):
     print(f"Hello {self.f_name} {self.l_name}, Welcome to Loyds Bank. Can you type in your password?")
-    print(SecureUnit.checking_correct_password(self))
+    print(PasswordCheck.checking_correct_password(self))
     return self.func(*args)
   
   def checking_correct_password(self):
@@ -51,25 +52,68 @@ class SecureUnit(BankAcc, LloydsBank):
       else:
         user_input = input("Type In Your Password: ")
     else:
-      SecureUnit.your_account(self)
+      PasswordCheck.your_account(self)
+ 
+class Services(PasswordCheck):
+  def __init__(self, f_name ,withdraw, deposit, func):
+    self.f_name = f_name
+    self.withdraw = withdraw
+    self.deposit = deposit
+    self.func = func
+
+  def __call__(self, *args):
+    print(Services.your_account(self))
+    return self.func(*args)
+  
+  def money_out(self):
+    self.balance = self.balance - self.withdraw
+    return self.balance
+  
+  def money_in(self):
+    self.balance = self.deposit + self.balance
+    return self.balance
   
   def your_account(self):
-    print(f"Hi {self.f_name }, What would you like ?")
-    user1_input = input("")
-    if user1_input == "check balance":
+    self.quest = f"Hi {self.f_name }, What would you like ?"
+    print(self.quest)
+    self.user1_input = input("")
+    if self.user1_input == "check balance":
       print("No problem I'll get that sorted for you")
       print(f"Your balance is {self.balance}")
       print(f"{self.f_name }, is there anything else you like help with ?")
-      user1_input = input("")
-      if user1_input == "no":
-        print("Thnak you good bye")
+      self.same_user = input("")
+      if self.same_user == "yes":
+        print(self.quest)
+        self.user1_input = input("")
       else:
-        print("How can i help?")
+        print("Thank you good bye")
+    elif self.user1_input == "deposit money":
+      print("No problem I'll get that sorted for you")
+      Services.money_in()
+      print(f"{self.f_name }, is there anything else you like help with ?")
+      self.same_user = input("")
+      if self.same_user == "yes":
+        self.quest
+        self.user1_input = input("")
+      else:
+        print("Thank you good bye")
+    elif self.user1_input == "take out money":
+      print("No problem I'll get that sorted for you")
+      Services.money_out()
+      print(f"{self.f_name }, is there anything else you like help with ?")
+      self.same_user = input("")
+      if self.same_user == "yes":
+        self.quest
+        self.user1_input = input("")
+      else:
+        print("Thank you good bye")
 
-def intro(self):
+
+
+def serv_acc(self):
   return self
 
-@SecureUnit(f_name="Mike", l_name="Jones", age=24, password="Yes", secrurity_keyword="pop", func=intro, wage=400)
+@Services(f_name="fd", withdraw=40 , deposit=50, func=serv_acc)
 def user1():
   pass
 
