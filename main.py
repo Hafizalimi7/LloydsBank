@@ -110,12 +110,12 @@ class Services(PasswordCheck):
 
 
 
-def serv_acc(self):
-  return self
+# def serv_acc(self):
+#   return self
 
-@Services(f_name="fd", withdraw=40 , deposit=50, func=serv_acc)
-def user1():
-  pass
+# @Services(f_name="fd", withdraw=40 , deposit=50, func=serv_acc)
+# def user1():
+#   pass
 
 # deposit()
 
