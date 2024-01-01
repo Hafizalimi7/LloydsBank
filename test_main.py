@@ -1,6 +1,7 @@
 import unittest
+from unittest.mock import patch
 
-from main import LloydsBank, BankAcc 
+from main import LloydsBank, BankAcc , PasswordCheck
 
 
 class TestLloydsCls(unittest.TestCase):
@@ -32,14 +33,40 @@ class TestLloydsCls(unittest.TestCase):
     age = self.user1.p_age()
     self.assertEqual(age, self.user1.age)
   
-# class TestBankCls(TestLloydsCls, unittest.TestCase):
-#   class Bank:
-#     customer1 = BankAcc("John", "Smith", 34, None, 2000)
+class TestBankCls(TestLloydsCls, unittest.TestCase):
+ 
+    customer1 = BankAcc("John", "Smith", 34, None, 2000)
 
-#     def test_end_of_month_meth(self):
-#       month_wage = self.customer1.end_of_month_salary()
-#       self.assertEqual(month_wage, 45)
+    def test_end_of_month_meth(self):
+      month_wage = self.customer1.end_of_month_salary()
+      self.assertEqual(month_wage, 8000)
+    
+    def test_year_salary_meth(self):
+      year_wage = self.customer1.yearly_salary()
+      self.assertEqual(year_wage, 96000)
 
+class TestPasswordCheck(TestBankCls, unittest.TestCase):
+  user3 = PasswordCheck
+  passwords = user3.password=1234
+  securityq = user3.secrurity_keyword="Letter"
+  
+  
+  @patch('main.PasswordCheck.checking_correct_password', return_value=passwords)
+  def test_password_correct(self, input):
+      self.assertEqual(self.user3.checking_correct_password(), 1234)
+      
+  @patch('main.PasswordCheck.checking_correct_password', return_value=passwords)
+  def test_passwd_not_correct(self, input):
+    self.assertNotEqual(self.user3.checking_correct_password(), "hello")
+  
+  @patch('main.PasswordCheck.checking_correct_password', return_value=securityq)
+  def test_securityq__correct(self, input):
+    self.assertEqual(self.user3.checking_correct_password(), "Letter")
+        
+  @patch('main.PasswordCheck.checking_correct_password', return_value=securityq)
+  def test_securityq_not_correct(self, input):
+     self.assertNotEqual(self.user3.checking_correct_password(), "Numbers")
+  
 
 if __name__ == "__main__":
   unittest.main()
