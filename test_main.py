@@ -50,6 +50,11 @@ class TestPasswordCheck(TestBankCls, unittest.TestCase):
   passwords = user3.password=1234
   securityq = user3.secrurity_keyword="Letter"
   
+  user5 = PasswordCheck
+  first_name = user5.f_name="Max"
+  last_name = user5.l_name="Jon"
+  str = f"Hello {first_name} {last_name}, Welcome to Loyds Bank. Can you type in your password?"
+  
   
   @patch('main.PasswordCheck.checking_correct_password', return_value=passwords)
   def test_password_correct(self, input):
@@ -67,6 +72,9 @@ class TestPasswordCheck(TestBankCls, unittest.TestCase):
   def test_securityq_not_correct(self, input):
      self.assertNotEqual(self.user3.checking_correct_password(), "Numbers")
   
+  @patch('main.PasswordCheck.__call__', return_value=str)
+  def test_call_method(self, input):
+    self.assertEqual(self.user5.__call__(),"Hello Max Jon, Welcome to Loyds Bank. Can you type in your password?")
 
 if __name__ == "__main__":
   unittest.main()
