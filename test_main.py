@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import patch
 
-from main import LloydsBank, BankAcc , PasswordCheck
+from main import LloydsBank, BankAcc , PasswordCheck, Services
 
 
 class TestLloydsCls(unittest.TestCase):
@@ -22,16 +22,16 @@ class TestLloydsCls(unittest.TestCase):
    """testing LloydsBank methods"""
 
   def test_first_name_meth(self):
-    first_name = self.user1.first_name()
-    self.assertEqual(first_name, "Tom")
+    # first_name = self.user1.first_name()
+    self.assertEqual(self.user1.first_name(), "Tom")
 
   def test_last_name_meth(self):
-    last_name = self.user1.last_name()
-    self.assertEqual(last_name, "Bradly")
+    # last_name = self.user1.last_name()
+    self.assertEqual(self.user1.last_name(), "Bradly")
   
   def test_user_age(self):
-    age = self.user1.p_age()
-    self.assertEqual(age, self.user1.age)
+    # age = self.user1.p_age()
+    self.assertEqual(self.user1.p_age(), self.user1.age)
   
 class TestBankCls(TestLloydsCls, unittest.TestCase):
  
@@ -75,6 +75,29 @@ class TestPasswordCheck(TestBankCls, unittest.TestCase):
   @patch('main.PasswordCheck.__call__', return_value=str)
   def test_call_method(self, input):
     self.assertEqual(self.user5.__call__(),"Hello Max Jon, Welcome to Loyds Bank. Can you type in your password?")
+  
+class TestServicesCls(TestPasswordCheck, unittest.TestCase):
+  def serv_acc(self):
+   return self
+  
+  @Services(f_name="fd", withdraw=40 , deposit=50, func=serv_acc)
+  def user1():
+    pass
+
+  
+  new_user = Services("Fred", withdraw=40 , deposit=50, func=serv_acc)
+ 
+  
+  @patch('builtins.input')
+  def test_query_y(self, input):
+    
+    # print(self.new_user.__call__(self))
+    self.assertEqual(self.new_user.__call__(), "check balance")
+  
+
+    
+    
+
 
 if __name__ == "__main__":
   unittest.main()

@@ -89,7 +89,8 @@ class Services(PasswordCheck):
         print("Thank you good bye")
     elif self.user1_input == "deposit money":
       print("No problem I'll get that sorted for you")
-      Services.money_in()
+      a = Services.money_in
+      print(a())
       print(f"{self.f_name }, is there anything else you like help with ?")
       self.same_user = input("")
       if self.same_user == "yes":
