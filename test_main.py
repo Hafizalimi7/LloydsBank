@@ -22,15 +22,12 @@ class TestLloydsCls(unittest.TestCase):
    """testing LloydsBank methods"""
 
   def test_first_name_meth(self):
-    # first_name = self.user1.first_name()
     self.assertEqual(self.user1.first_name(), "Tom")
 
   def test_last_name_meth(self):
-    # last_name = self.user1.last_name()
     self.assertEqual(self.user1.last_name(), "Bradly")
   
   def test_user_age(self):
-    # age = self.user1.p_age()
     self.assertEqual(self.user1.p_age(), self.user1.age)
   
 class TestBankCls(TestLloydsCls, unittest.TestCase):
