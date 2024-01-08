@@ -73,26 +73,22 @@ class TestPasswordCheck(TestBankCls, unittest.TestCase):
   def test_call_method(self, input):
     self.assertEqual(self.user5.__call__(),"Hello Max Jon, Welcome to Loyds Bank. Can you type in your password?")
   
-class TestServicesCls(TestPasswordCheck, unittest.TestCase):
-  def serv_acc(self):
-   return self
-  
-  @Services(f_name="fd", withdraw=40 , deposit=50, func=serv_acc)
-  def user1():
-    pass
+class TestServicesCls(unittest.TestCase):
 
+  user = Services("max", 30, 100)
   
-  new_user = Services("Fred", withdraw=40 , deposit=50, func=serv_acc)
- 
-  
-  @patch('builtins.input')
+  @patch('builtins.input',side_effect=['check balance', "deposit money", "take out money"])
+  def test_check_balance(self, input):
+    self.assertEqual(self.user.your_account(), f"No problem I'll get that sorted for you\nYour balance is {self.user.balance} Mr {self.user.f_name}")
+
+  @patch('builtins.input',side_effect=["deposit money"])
+  def test_deposit(self, input):
+    self.assertEqual(self.user.your_account(), f"We have put in £{self.user.deposit}\nYour balance is now {self.user.money_in()} Mr {self.user.f_name}")
+
+  @patch('builtins.input',  side_effect=['take out money'])
   def test_query_y(self, input):
-    
-    # print(self.new_user.__call__(self))
-    self.assertEqual(self.new_user.__call__(), "check balance")
+    self.assertEqual(self.user.your_account(), f"We have withdrawn £{self.user.withdraw} from your account\nYour balance is now {self.user.money_out()} Mr {self.user.f_name}")
   
-
-    
     
 
 

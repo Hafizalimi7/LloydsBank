@@ -39,8 +39,8 @@ class PasswordCheck(BankAcc, LloydsBank):
     self.security_keyword = secrurity_keyword
   
   def __call__(self, *args):
-    print(f"Hello {self.f_name} {self.l_name}, Welcome to Loyds Bank. Can you type in your password?")
-    print(PasswordCheck.checking_correct_password(self))
+    # print(f"Hello {self.f_name} {self.l_name}, Welcome to Loyds Bank. Can you type in your password?")
+    # print(self.checking_correct_password()
     return self.func(*args)
   
   def checking_correct_password(self):
@@ -55,62 +55,38 @@ class PasswordCheck(BankAcc, LloydsBank):
       PasswordCheck.your_account(self)
  
 class Services(PasswordCheck):
-  def __init__(self, f_name ,withdraw, deposit, func):
+  def __init__(self, f_name ,withdraw, deposit):
     self.f_name = f_name
     self.withdraw = withdraw
     self.deposit = deposit
-    self.func = func
+    # self.func = func
 
-  def __call__(self, *args):
-    print(Services.your_account(self))
-    return self.func(*args)
+  # def __call__(self):
+    # print(self)
+    # return self.your_account()
+    # return self.func()
   
   def money_out(self):
-    self.balance = self.balance - self.withdraw
+    self.balance - self.withdraw
     return self.balance
   
   def money_in(self):
-    self.balance = self.deposit + self.balance
+    self.balance + self.deposit
     return self.balance
   
   def your_account(self):
     self.quest = f"Hi {self.f_name }, What would you like ?"
-    print(self.quest)
     self.user1_input = input("")
     if self.user1_input == "check balance":
-      print("No problem I'll get that sorted for you")
-      print(f"Your balance is {self.balance}")
-      print(f"{self.f_name }, is there anything else you like help with ?")
-      self.same_user = input("")
-      if self.same_user == "yes":
-        print(self.quest)
-        self.user1_input = input("")
-      else:
-        print("Thank you good bye")
+      return f"No problem I'll get that sorted for you\nYour balance is {self.balance} Mr {self.f_name}"
     elif self.user1_input == "deposit money":
-      print("No problem I'll get that sorted for you")
-      a = Services.money_in
-      print(a())
-      print(f"{self.f_name }, is there anything else you like help with ?")
-      self.same_user = input("")
-      if self.same_user == "yes":
-        self.quest
-        self.user1_input = input("")
-      else:
-        print("Thank you good bye")
+      return f"We have put in £{self.deposit}\nYour balance is now {self.money_in()} Mr {self.f_name}"
     elif self.user1_input == "take out money":
-      print("No problem I'll get that sorted for you")
-      Services.money_out()
-      print(f"{self.f_name }, is there anything else you like help with ?")
-      self.same_user = input("")
-      if self.same_user == "yes":
-        self.quest
-        self.user1_input = input("")
-      else:
-        print("Thank you good bye")
+      return f"We have withdrawn £{self.withdraw} from your account\nYour balance is now {self.money_out()} Mr {self.f_name}"
 
 
 
+# @Services(f_name="fd", withdraw=40 , deposit=50, func=None)
 # def serv_acc(self):
 #   return self
 
@@ -118,6 +94,8 @@ class Services(PasswordCheck):
 # def user1():
 #   pass
 
+# ab = Services("max", 30, 100, None)
+# print(f"{ab.balance} and {ab.money_in()}")
 # deposit()
 
 # user = SecureUnit("Josh", "Palley", 34, "Kizzy", "Mother")
