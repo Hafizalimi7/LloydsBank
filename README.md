@@ -1,6 +1,6 @@
 ## LloydsBank
 
 
-user can check balance
-user can wthdaw money
-user can deposit money
+- user can check balance
+- user can wthdaw money
+- user can deposit money
